@@ -27,16 +27,52 @@ int izbornik(const char* const ime) {
 
 		break;
 
-	case 2:
-	
+	case 2:   //14
+
+		if (poljeProizvoda != NULL) {
+			free(poljeProizvoda);
+			poljeProizvoda = NULL;
+		}
+
+		poljeProizvoda = (PROIZVOD*)ucitajProizvod(ime);
+
+		ispisiSortiraneProizvode(poljeProizvoda);
+
 
 		break;
+
 	case 3:
+		if (poljeProizvoda != NULL) {
+			free(poljeProizvoda);
+		}
+
+		poljeProizvoda= (PROIZVOD*)ucitajProizvod(ime);
+
+		ispisiProizvod(poljeProizvoda);
 
 
 		break;
 
 	case 4:
+		if (poljeProizvoda != NULL) {
+			free(poljeProizvoda);
+		}
+
+		poljeProizvoda = (PROIZVOD*)ucitajProizvod(ime);
+
+		pronadeniProizvod = (PROIZVOD*)pretrazivanje(poljeProizvoda);
+
+		if (pronadeniProizvod != NULL) {
+			printf("ID: %d\n", pronadeniProizvod->id);
+			printf("Ime: %s\n", pronadeniProizvod->ime);
+			printf("starost proizvoda: %d\n", pronadeniProizvod->starost);
+			printf("vrsta proizvoda: %s\n", pronadeniProizvod->vrsta);
+			printf("cijena proizvoda: %d\n", pronadeniProizvod->cijena);
+			printf("kolicina proizvoda: %d\n", pronadeniProizvod->kolicina);
+		}
+		else {
+			printf("Ne postoji proizvod s tim ID-em");
+		}
 		
 		break;
 

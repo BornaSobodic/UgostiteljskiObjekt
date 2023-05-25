@@ -6,5 +6,5 @@ typedef struct PROIZVOD {       //Struktura proizvoda
 	char vrsta[20];
 	float cijena;
 	int kolicina;
-}ARTIKL;
+}PROIZVOD;
 #endif
