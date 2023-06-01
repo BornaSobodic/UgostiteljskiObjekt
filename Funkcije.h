@@ -11,5 +11,5 @@ void ispisiProizvoda(const PROIZVOD* const);
 void brisanjePROIZVODA(PROIZVOD* const, const char* const);
 void* pretrazivanje(PROIZVOD* const);
 void* sortiraj(char*);
-void ispisiSortiraneProizvode(const ARTIKL* polje);
+void ispisiSortiraneProizvode(const PROIZVOD* polje);
 #endif

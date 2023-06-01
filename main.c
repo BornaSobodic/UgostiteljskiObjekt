@@ -6,7 +6,7 @@
 
 int main(void) {
 
-	inicijalizacija("skladiste.bin");
+	inicijalizacija("skladiste.bin"); //16
 
 	int uvijet = 1;
 

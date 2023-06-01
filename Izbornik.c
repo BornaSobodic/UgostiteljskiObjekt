@@ -15,10 +15,10 @@ int izbornik(const char* const ime) {
 	printf("Opcija 5: Brisanje proizvoda\n");
 	printf("Opcija 6: Zavrsetak programa\n\n");
 
-	int uvijet = 0;
+	int uvijet = 0; //1
 
-	static PROIZVOD* poljeProizvoda = NULL;
-	static PROIZVOD* pronadeniProizvoda = NULL;
+	static PROIZVOD* poljeProizvoda = NULL;   //4
+	static PROIZVOD* pronadeniProizvoda = NULL;  //5
 
 	switch (uvijet) {                     //Ovo su opcije koje imam u izborniku
 	case 1:
@@ -46,7 +46,7 @@ int izbornik(const char* const ime) {
 			free(poljeProizvoda);
 		}
 
-		poljeProizvoda= (PROIZVOD*)ucitajProizvod(ime);
+		poljeProizvoda= (PROIZVOD*)ucitajProizvod(ime);  //9
 
 		ispisiProizvod(poljeProizvoda);
 
@@ -78,6 +78,14 @@ int izbornik(const char* const ime) {
 
 	case 5:
 
+		if(poljeProizvoda != NULL) {
+			free(poljeProizvoda);
+			poljeProizvoda = NULL;
+		}
+
+		poljeProizvoda = (PROIZVOD*)ucitajProizvod(ime);
+
+		ispisiSortiraneProizvode(poljeProizvoda);
 		break;
 
 	case 6:

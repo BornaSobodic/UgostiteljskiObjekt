@@ -75,7 +75,7 @@ void dodajProizvod(const char* const ime) {
 }
 
 
-void* ucitajProizvod(const char* const ime) {
+void* ucitajProizvod(const char* const ime) {   //10
 
 	FILE* fp = fopen(ime, "rb");
 
@@ -87,7 +87,7 @@ void* ucitajProizvod(const char* const ime) {
 	fread(&brojProizvoda, sizeof(int), 1, fp);
 	printf("Broj artikala: %d\n", brojProizvoda);
 
-	PROIZVOD* poljeProizvoda = (ARTIKL*)calloc(brojProizvoda, sizeof(PROIZVOD));
+	PROIZVOD* poljeProizvoda = (PROIZVOD*)calloc(brojProizvoda, sizeof(PROIZVOD));
 
 	if (poljeProizvoda == NULL) {
 		perror("Zauzimanje memorije za polje artikala.");
@@ -100,4 +100,31 @@ void* ucitajProizvod(const char* const ime) {
 	printf("Svi artikli ucitani..\n");
 
 	return poljeProizvoda;
+}
+
+
+void* pretrazivanje(PROIZVOD* const polje) {  
+
+	if (polje == NULL) {
+		printf("Polje proizvoda prazno");
+		return NULL;
+	}
+
+	int i;
+
+	int trazeniId;
+
+	printf("Unesite ID proizvoda kojeg trazite: ");
+	scanf("%d", &trazeniId);
+
+	for (i = 0; i < brojProizvoda; i++) {
+
+		if (trazeniId == (polje + i)->id) {
+			printf("Proizvod pronaden.\n");
+
+			return (polje + i);
+		}
+	}
+
+	return NULL;
 }
