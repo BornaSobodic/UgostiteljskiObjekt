@@ -18,10 +18,15 @@ int izbornik(const char* const ime) {
 	int uvijet = 0; //1
 
 	static PROIZVOD* poljeProizvoda = NULL;   //4
-	static PROIZVOD* pronadeniProizvoda = NULL;  //5
+	static PROIZVOD* pronadeniProizvod = NULL;  //5
+
+	scanf("%d", &uvijet);
+	system("cls");
+
+
 
 	switch (uvijet) {                     //Ovo su opcije koje imam u izborniku
-	case 1:
+	case 1: //6
 
 		dodajProizvod(ime);
 
@@ -46,9 +51,9 @@ int izbornik(const char* const ime) {
 			free(poljeProizvoda);
 		}
 
-		poljeProizvoda= (PROIZVOD*)ucitajProizvod(ime);  //9
+		poljeProizvoda = (PROIZVOD*)ucitajProizvod(ime);  //9
 
-		ispisiProizvod(poljeProizvoda);
+		ispisiProizvoda(poljeProizvoda);
 
 
 		break;
@@ -65,7 +70,6 @@ int izbornik(const char* const ime) {
 		if (pronadeniProizvod != NULL) {
 			printf("ID: %d\n", pronadeniProizvod->id);
 			printf("Ime: %s\n", pronadeniProizvod->ime);
-			printf("starost proizvoda: %d\n", pronadeniProizvod->starost);
 			printf("vrsta proizvoda: %s\n", pronadeniProizvod->vrsta);
 			printf("cijena proizvoda: %d\n", pronadeniProizvod->cijena);
 			printf("kolicina proizvoda: %d\n", pronadeniProizvod->kolicina);
@@ -73,12 +77,12 @@ int izbornik(const char* const ime) {
 		else {
 			printf("Ne postoji proizvod s tim ID-em");
 		}
-		
+
 		break;
 
 	case 5:
 
-		if(poljeProizvoda != NULL) {
+		if (poljeProizvoda != NULL) {
 			free(poljeProizvoda);
 			poljeProizvoda = NULL;
 		}
@@ -90,10 +94,12 @@ int izbornik(const char* const ime) {
 
 	case 6:
 
+		uvijet = izlaz(poljeProizvoda);
 		break;
 	default:
-		
+		uvijet = 0;
 	}
+
 
 	return uvijet;
 }

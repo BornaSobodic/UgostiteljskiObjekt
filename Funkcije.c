@@ -4,7 +4,7 @@
 #include <string.h>
 #include "StrukturaProizvoda.h"
 
-static int brojArtikala = 0;
+static int brojProizvoda = 0;
 
 //17
 
@@ -37,19 +37,17 @@ void dodajProizvod(const char* const ime) {
 	fread(&brojProizvoda, sizeof(int), 1, fp);
 	printf("Broj clanova: %d\n", brojProizvoda);
 
-	ARTIKL temp = { 0 };
+	PROIZVOD temp = { 0 };
 
 	temp.id = brojProizvoda + 1;
 
 	getchar();
 
 	printf("Unesite ime: ");
-	scanf("%24[^\n]", temp.ime);
+	scanf("%24[^\n]", temp.ime);    //2
 	getchar();
 
-	printf("Unesite broj godina odlezanosti: ");
-	scanf("%d", &temp.starost);
-	getchar();
+
 
 	printf("unesite vrstu pica: ");
 	scanf("%24[^\n]", temp.vrsta);
@@ -90,20 +88,84 @@ void* ucitajProizvod(const char* const ime) {   //10
 	PROIZVOD* poljeProizvoda = (PROIZVOD*)calloc(brojProizvoda, sizeof(PROIZVOD));
 
 	if (poljeProizvoda == NULL) {
-		perror("Zauzimanje memorije za polje artikala.");
+		perror("Zauzimanje memorije za polje proizvoda.");
 		return NULL;
 
 	}
 
 	fread(poljeProizvoda, sizeof(PROIZVOD), brojProizvoda, fp);
 
-	printf("Svi artikli ucitani..\n");
+	printf("Svi proizvodi ucitani..\n");
 
 	return poljeProizvoda;
 }
 
+void zamjena(PROIZVOD* const veci, PROIZVOD* const manji) {
+	PROIZVOD temp = { 0 };
+	temp = *manji;
+	*manji = *veci;
+	*veci = temp;
+}
 
-void* pretrazivanje(PROIZVOD* const polje) {  
+void* sortiraj(PROIZVOD* polje) {  //20
+	int min = -1;
+	for (int i = 0; i < brojProizvoda - 1; i++)
+	{
+		min = i;
+		for (int j = i + 1; j < brojProizvoda; j++)
+		{
+			if ((polje + j)->cijena < (polje + min)->cijena) {
+				min = j;
+			}
+		}
+		zamjena((polje + i), (polje + min));
+	}
+
+	return polje;
+}
+
+void ispisiSortiraneProizvode(const PROIZVOD* polje) {
+
+	if (brojProizvoda == 0) {
+		printf("Polje automobila prazno\n");
+		return;
+	}
+
+
+	polje = sortiraj(polje);
+
+
+	for (int i = 0; i < brojProizvoda; i++) {
+		printf("ID: %d\tIme: %s\tvrsta: %s\tcijena: %.2f\tkolicina: %d\n\n",
+			(polje + i)->id,
+			(polje + i)->ime,
+			(polje + i)->vrsta,
+			(polje + i)->cijena,
+			(polje + i)->kolicina);
+	}
+}
+
+void ispisiProizvoda(const PROIZVOD* const polje) {
+
+	if (polje == NULL) {
+		printf("Polje proizvoda prazno");
+		return;
+	}
+
+	int i;
+
+	for (i = 0; i < brojProizvoda; i++) {
+		printf("ID: %d\tIme: %s\tvrsta: %s\tcijena: %.2f\tkolicina: %d\n\n",
+			(polje + i)->id,
+			(polje + i)->ime,
+			(polje + i)->vrsta,
+			(polje + i)->cijena,
+			(polje + i)->kolicina);
+	}
+}
+
+
+void* pretrazivanje(PROIZVOD* const polje) {  //21
 
 	if (polje == NULL) {
 		printf("Polje proizvoda prazno");
@@ -127,4 +189,69 @@ void* pretrazivanje(PROIZVOD* const polje) {
 	}
 
 	return NULL;
+}
+
+
+void brisanjeArtikla(PROIZVOD* const polje, const char* const dat) {
+
+	if (brojProizvoda == 0) {
+		printf("Polje proizvoda je prazno\n");
+		return;
+	}
+
+	FILE* fp = fopen(dat, "rb+");
+
+	if (fp == NULL) {
+		perror("Brisanje proizvoda");
+		exit(EXIT_FAILURE);
+	}
+
+	fseek(fp, sizeof(int), SEEK_CUR);
+
+	int i, trazeniId;
+
+	printf("Unesite ID proizvoda kojeg zelite obrisati: ");
+
+	do {
+		scanf("%d", &trazeniId);
+		if (trazeniId < 1 || trazeniId > brojProizvoda) {
+			printf("Proizvod s unesenim ID-em ne postoji. Unesite ID koji postoji: ");
+		}
+	} while (trazeniId < 1 || trazeniId > brojProizvoda);
+
+	PROIZVOD* poljeProizvoda = (PROIZVOD*)calloc(brojProizvoda - 1, sizeof(PROIZVOD));
+
+	int counter = 0;
+
+	for (i = 0; i < brojProizvoda; i++) {
+
+		if (trazeniId != (polje + i)->id) {
+			*(poljeProizvoda + counter) = *(polje + i);
+
+			if ((poljeProizvoda + counter)->id > trazeniId) {
+				(poljeProizvoda + counter)->id -= 1;
+			}
+
+			fwrite((poljeProizvoda + counter), sizeof(PROIZVOD), 1, fp);
+			counter++;
+		}
+	}
+
+	free(poljeProizvoda);
+	poljeProizvoda = NULL;
+
+	rewind(fp);
+
+	fwrite(&counter, sizeof(int), 1, fp);
+	fclose(fp);
+
+	printf("Proizvod je uspjesno obrisan\n");
+}
+
+
+int izlaz(PROIZVOD* polje) {
+
+	free(polje);
+
+	return 0;
 }
