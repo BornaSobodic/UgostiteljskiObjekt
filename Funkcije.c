@@ -4,7 +4,7 @@
 #include <string.h>
 #include "StrukturaProizvoda.h"
 
-static int brojProizvoda = 0;
+static int brojProizvoda = 0; //10
 
 //17
 
@@ -61,7 +61,7 @@ void dodajProizvod(const char* const ime) {
 	scanf("%d", &temp.kolicina);
 	getchar();
 
-	fseek(fp, sizeof(PROIZVOD) * brojProizvoda, SEEK_CUR);
+	fseek(fp, sizeof(PROIZVOD) * brojProizvoda, SEEK_CUR); //17
 	fwrite(&temp, sizeof(PROIZVOD), 1, fp);
 
 	rewind(fp);
@@ -73,12 +73,12 @@ void dodajProizvod(const char* const ime) {
 }
 
 
-void* ucitajProizvod(const char* const ime) {   //10
+void* ucitajProizvod(const char* const ime) {
 
 	FILE* fp = fopen(ime, "rb");
 
 	if (fp == NULL) {
-		perror("Ucitavanje clanova iz datoteke");
+		perror("Ucitavanje clanova iz datoteke"); //19
 		exit(EXIT_FAILURE);
 	}
 
@@ -192,7 +192,7 @@ void* pretrazivanje(PROIZVOD* const polje) {  //21
 }
 
 
-void brisanjeArtikla(PROIZVOD* const polje, const char* const dat) {
+void brisanjePROIZVODA(PROIZVOD* const polje, const char* const dat) {
 
 	if (brojProizvoda == 0) {
 		printf("Polje proizvoda je prazno\n");
@@ -219,7 +219,7 @@ void brisanjeArtikla(PROIZVOD* const polje, const char* const dat) {
 		}
 	} while (trazeniId < 1 || trazeniId > brojProizvoda);
 
-	PROIZVOD* poljeProizvoda = (PROIZVOD*)calloc(brojProizvoda - 1, sizeof(PROIZVOD));
+	PROIZVOD* poljeProizvoda = (PROIZVOD*)calloc(brojProizvoda - 1, sizeof(PROIZVOD)); //14
 
 	int counter = 0;
 
@@ -237,7 +237,7 @@ void brisanjeArtikla(PROIZVOD* const polje, const char* const dat) {
 		}
 	}
 
-	free(poljeProizvoda);
+	free(poljeProizvoda); //15
 	poljeProizvoda = NULL;
 
 	rewind(fp);
@@ -248,6 +248,21 @@ void brisanjeArtikla(PROIZVOD* const polje, const char* const dat) {
 	printf("Proizvod je uspjesno obrisan\n");
 }
 
+int brisanjeDatoteke(char* fp) {
+
+	int status;
+
+	status = remove("skladiste.bin");//18
+
+	if (status == 0) {
+		printf("Datoteka uspjesno obrisana\n");
+
+	}
+	else {
+		printf("Nije moguce obrisati datoteku\n");
+	}
+	return 0;
+}
 
 int izlaz(PROIZVOD* polje) {
 
