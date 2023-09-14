@@ -127,7 +127,7 @@ void* sortiraj(PROIZVOD* polje) {  //20
 void ispisiSortiraneProizvode(const PROIZVOD* polje) {
 
 	if (brojProizvoda == 0) {
-		printf("Polje automobila prazno\n");
+		printf("Polje proizvoda prazno\n");
 		return;
 	}
 
