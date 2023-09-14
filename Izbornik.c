@@ -16,10 +16,10 @@ int izbornik(const char* const ime) {
 	printf("Opcija 6: Zavrsetak programa\n");
 	printf("Opcija 7: Brisanje datoteke\n");
 
-	int uvijet = 0; //1
+	int uvijet = 0;
 
-	static PROIZVOD* poljeProizvoda = NULL;   //4
-	static PROIZVOD* pronadeniProizvod = NULL;  //5
+	static PROIZVOD* poljeProizvoda = NULL;   
+	static PROIZVOD* pronadeniProizvod = NULL; 
 
 	scanf("%d", &uvijet);
 	system("cls");
@@ -130,8 +130,8 @@ int izbornik(const char* const ime) {
 //
 //	int uvijet = 0; //1
 //
-//	static PROIZVOD* poljeProizvoda = NULL;   //4
-//	static PROIZVOD* pronadeniProizvod = NULL;  //5
+//	static PROIZVOD* poljeProizvoda = NULL;
+//	static PROIZVOD* pronadeniProizvod = NULL;
 //
 //	scanf("%d", &uvijet);
 //	system("cls");
@@ -164,7 +164,7 @@ int izbornik(const char* const ime) {
 //			free(poljeProizvoda);
 //		}
 //
-//		poljeProizvoda = (PROIZVOD*)ucitajProizvod(ime);  //9
+//		poljeProizvoda = (PROIZVOD*)ucitajProizvod(ime);
 //
 //		ispisiProizvoda(poljeProizvoda);
 //
