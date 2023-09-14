@@ -83,7 +83,7 @@ void* ucitajProizvod(const char* const ime) {
 	}
 
 	fread(&brojProizvoda, sizeof(int), 1, fp);
-	printf("Broj artikala: %d\n", brojProizvoda);
+	printf("Broj proizvoda: %d\n", brojProizvoda);
 
 	PROIZVOD* poljeProizvoda = (PROIZVOD*)calloc(brojProizvoda, sizeof(PROIZVOD));
 
